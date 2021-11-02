@@ -20,13 +20,6 @@ namespace HeartToHeartNon_Profit.Services
             }
         }
 
-        public string RandomString(int length)
-        {
-            Random random = new();
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
 
         public bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {

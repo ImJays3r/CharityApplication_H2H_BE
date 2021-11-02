@@ -1,4 +1,8 @@
+using HeartToHeartNon_Profit.Interfaces;
 using HeartToHeartNon_Profit.Models.Data;
+using HeartToHeartNon_Profit.Repositories;
+using HeartToHeartNon_Profit.Repositories.Interfaces;
+using HeartToHeartNon_Profit.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,12 +35,20 @@ namespace HeartToHeartNon_Profit
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HeartToHeartNon_Profit", Version = "v1" });
             });
+
+
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IRandomService, RandomService>();
+
+
             services.AddDbContext<HeartToHeartContext>(options => options.UseSqlServer(Configuration.GetConnectionString("H2H")));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {

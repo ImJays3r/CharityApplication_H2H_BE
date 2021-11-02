@@ -50,5 +50,11 @@ namespace HeartToHeartNon_Profit.Models.Input
         /// </summary>
         [Required(ErrorMessage = "Can't be empty")]
         public string Gender { get; set; }
+
+        /// <summary>
+        /// phone
+        /// </summary>
+        [Required(ErrorMessage = "Can't be empty")]
+        public string Phone { get; set; }
     }
 }

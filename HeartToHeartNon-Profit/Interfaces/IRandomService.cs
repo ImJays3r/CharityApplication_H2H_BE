@@ -11,6 +11,5 @@ namespace HeartToHeartNon_Profit.Interfaces
 
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
 
-        string RandomString(int length);
     }
 }
