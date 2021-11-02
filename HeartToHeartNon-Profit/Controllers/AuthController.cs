@@ -18,6 +18,12 @@ namespace HeartToHeartNon_Profit.Controllers
         private readonly IAuthRepository _repo;
         private readonly ITokenService _tokenService;
 
+        public AuthController(IAuthRepository repo, ITokenService tokenService)
+        {
+            _repo = repo;
+            _tokenService = tokenService;
+        }
+
         /// <summary>
         /// Login With Email And Password
         /// </summary>
@@ -39,6 +45,26 @@ namespace HeartToHeartNon_Profit.Controllers
                 Token = _tokenService.CreateToken(user)
             };
             return Ok(login);
+        }
+
+        /// <summary>
+        /// Register to a member role
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(Register user)
+        {
+            if (await _repo.UserExists(user.Email))
+                return BadRequest("Email already exists");
+            if (await _repo.Register(user))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }
