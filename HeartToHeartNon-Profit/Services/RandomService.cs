@@ -10,7 +10,7 @@ namespace HeartToHeartNon_Profit.Services
 {
     public class RandomService : IRandomService
     {
-        private readonly string _key;
+        
         public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512())
