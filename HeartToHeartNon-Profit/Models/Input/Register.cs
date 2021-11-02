@@ -42,19 +42,19 @@ namespace HeartToHeartNon_Profit.Models.Input
         /// <summary>
         /// cmnd/cccd
         /// </summary>
-        [Required(ErrorMessage = "Can't be empty")]
+        [Required(ErrorMessage = "Can't be empty"), StringLength(12, MinimumLength =10, ErrorMessage = "Length must between 10 and 12")]
         public string CredentialId { get; set; }
 
         /// <summary>
         /// gender
         /// </summary>
-        [Required(ErrorMessage = "Can't be empty")]
+        [Required(ErrorMessage = "Can't be empty"), RegularExpression("MALE|FEMALE|OTHER", ErrorMessage = "'MALE or 'FEMALE' or 'OTHER'.")]
         public string Gender { get; set; }
 
         /// <summary>
         /// phone
         /// </summary>
-        [Required(ErrorMessage = "Can't be empty")]
+        [Required(ErrorMessage = "Can't be empty"), Phone]
         public string Phone { get; set; }
     }
 }
