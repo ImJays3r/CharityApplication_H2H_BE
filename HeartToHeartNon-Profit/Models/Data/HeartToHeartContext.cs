@@ -32,14 +32,13 @@ namespace HeartToHeartNon_Profit.Models.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Name=H2H");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<Campaign>(entity =>
             {
@@ -79,16 +78,16 @@ namespace HeartToHeartNon_Profit.Models.Data
 
             modelBuilder.Entity<CampaignManager>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.CampaignId, e.ManagerId });
 
                 entity.HasOne(d => d.Campaign)
-                    .WithMany()
+                    .WithMany(p => p.CampaignManagers)
                     .HasForeignKey(d => d.CampaignId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CapaignManagers_Campaigns");
 
                 entity.HasOne(d => d.Manager)
-                    .WithMany()
+                    .WithMany(p => p.CampaignManagers)
                     .HasForeignKey(d => d.ManagerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CapaignManagers_Users");
@@ -297,8 +296,7 @@ namespace HeartToHeartNon_Profit.Models.Data
 
                 entity.Property(e => e.Gender)
                     .HasMaxLength(10)
-                    .HasColumnName("gender")
-                    .IsFixedLength(true);
+                    .IsUnicode(false);
 
                 entity.Property(e => e.PasswordHash).IsRequired();
 

@@ -24,7 +24,7 @@ namespace HeartToHeartNon_Profit.Models.Input
         /// user's  birthday 
         /// </summary>
         [Required(ErrorMessage = "Can't be empty")]
-        public DateTime DateOfBirth { get; set; }
+        public String DateOfBirth { get; set; }
 
 
         /// <summary>

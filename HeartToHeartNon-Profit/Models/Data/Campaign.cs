@@ -9,6 +9,7 @@ namespace HeartToHeartNon_Profit.Models.Data
     {
         public Campaign()
         {
+            CampaignManagers = new HashSet<CampaignManager>();
             Plans = new HashSet<Plan>();
             Tasks = new HashSet<Task>();
         }
@@ -26,6 +27,7 @@ namespace HeartToHeartNon_Profit.Models.Data
         public bool Status { get; set; }
 
         public virtual User Admin { get; set; }
+        public virtual ICollection<CampaignManager> CampaignManagers { get; set; }
         public virtual ICollection<Plan> Plans { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }
     }
