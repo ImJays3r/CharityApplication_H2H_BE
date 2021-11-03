@@ -4,6 +4,7 @@ using HeartToHeartNon_Profit.Models.Input;
 using HeartToHeartNon_Profit.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace HeartToHeartNon_Profit.Repositories
 {
     public class AuthRepository : IAuthRepository
     {
+        private const string Format = "dd-MM-yyyy";
         private readonly HeartToHeartContext _context;
         private readonly IRandomService _service;
         public AuthRepository(HeartToHeartContext context, IRandomService service)
@@ -50,7 +52,7 @@ namespace HeartToHeartNon_Profit.Repositories
             {
                 UserName = userIn.UserName,
                 CredentialId = userIn.CredentialId,
-                DateOfBirth = userIn.DateOfBirth,
+                DateOfBirth = DateTime.ParseExact(userIn.DateOfBirth, Format, CultureInfo.InvariantCulture),
                 Gender = userIn.Gender,
                 Email = userIn.Email.ToLower(),
                 SignUpDate = DateTime.Now,

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HeartToHeartNon_Profit.Repositories.Interfaces
 {
-    interface ICampaignManageRepository
+    public interface ICampaignManageRepository
     {
         /// <summary>
         /// Create new Campaign

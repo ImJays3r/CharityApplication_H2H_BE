@@ -47,13 +47,13 @@ namespace HeartToHeartNon_Profit.Models.Input
         /// <summary>
         /// startdate of campaign
         /// </summary>
-        [DataType(DataType.DateTime)]
-        public DateTime StartDate { get; set; }
+        [Required(ErrorMessage = "Can't be NULL")]
+        public String StartDate { get; set; }
 
         /// <summary>
         /// enddate of campaign
         /// </summary>
-        [DataType(DataType.DateTime)]
-        public DateTime EndDate { get; set; }
+        [Required(ErrorMessage = "Can't be NULL")]
+        public String EndDate { get; set; }
     }
 }
