@@ -48,7 +48,7 @@ namespace HeartToHeartNon_Profit.Models.Input
         /// <summary>
         /// gender
         /// </summary>
-        [Required(ErrorMessage = "Can't be empty"), RegularExpression("MALE|FEMALE|OTHER", ErrorMessage = "'MALE or 'FEMALE' or 'OTHER'.")]
+        [Required(ErrorMessage = "Can't be empty"), RegularExpression("MALE|FEMALE|OTHER", ErrorMessage = "'MALE' or 'FEMALE' or 'OTHER'.")]
         public string Gender { get; set; }
 
         /// <summary>
