@@ -12,6 +12,7 @@ namespace HeartToHeartNon_Profit.Repositories
 {
     public class AuthRepository : IAuthRepository
     {
+        private const string Format = "dd-MM-yyyy";
         private readonly HeartToHeartContext _context;
         private readonly IRandomService _service;
         public AuthRepository(HeartToHeartContext context, IRandomService service)
@@ -51,7 +52,7 @@ namespace HeartToHeartNon_Profit.Repositories
             {
                 UserName = userIn.UserName,
                 CredentialId = userIn.CredentialId,
-                DateOfBirth = DateTime.ParseExact(userIn.DateOfBirth, "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                DateOfBirth = DateTime.ParseExact(userIn.DateOfBirth, Format, CultureInfo.InvariantCulture),
                 Gender = userIn.Gender,
                 Email = userIn.Email.ToLower(),
                 SignUpDate = DateTime.Now,

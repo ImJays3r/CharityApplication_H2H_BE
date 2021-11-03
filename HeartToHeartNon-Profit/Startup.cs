@@ -47,7 +47,7 @@ namespace HeartToHeartNon_Profit
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRandomService, RandomService>();
-
+            services.AddScoped<ICampaignManageRepository, CampaignManageRepository>();
 
             services.AddDbContext<HeartToHeartContext>(options => options.UseSqlServer(Configuration.GetConnectionString("H2H")));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
