@@ -28,7 +28,7 @@ namespace HeartToHeartNon_Profit.Repositories
         /// <returns></returns>
         public async Task<User> Login(LoginInput userIn)
         {
-            var user = await _context.Users.Where(u => u.Email == userIn.Email.ToLower() && u.Status == true && u.RoleName != "ADMIN").SingleOrDefaultAsync();
+            var user = await _context.Users.Where(u => u.Email == userIn.Email.ToLower() && u.Status == true && u.RoleName != "SYSADMIN").SingleOrDefaultAsync();
             if (user == null)
                 return null;
 
