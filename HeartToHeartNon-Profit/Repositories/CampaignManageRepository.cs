@@ -26,7 +26,7 @@ namespace HeartToHeartNon_Profit.Repositories
         }
 
         /// <summary>
-        /// Create New Campaign 
+        /// Create New Campaign return id
         /// </summary>
         /// <param name="camIn"></param>
         /// <returns></returns>
@@ -51,6 +51,12 @@ namespace HeartToHeartNon_Profit.Repositories
             return  campaign.CampaignId;
         }
 
+        /// <summary>
+        /// update campaign picture
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<int> UpdateCamPicture(string url, int id)
         {
             try

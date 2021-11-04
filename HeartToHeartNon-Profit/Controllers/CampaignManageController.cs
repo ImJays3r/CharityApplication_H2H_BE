@@ -49,6 +49,12 @@ namespace HeartToHeartNon_Profit.Controllers
             }
         }
 
+        /// <summary>
+        /// Update campaign picture
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPut("update-picture")]
         public async Task<IActionResult> UpdateCamPicture(String url, int id)
         {
