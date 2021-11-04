@@ -28,5 +28,12 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         /// <param name="email"></param>
         /// <returns></returns>
         Task<bool> UserExists(string email);
+
+        /// <summary>
+        /// Login To ADMIN PAGE
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        Task<User> LoginAdmin(LoginInput user);
     }
 }

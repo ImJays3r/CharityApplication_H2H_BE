@@ -8,6 +8,8 @@ namespace HeartToHeartNon_Profit.Models.Input
 {
     public class CreateCampaignInput
     {
+
+
         /// <summary>
         /// Campaign Title
         /// </summary>

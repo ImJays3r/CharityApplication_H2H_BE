@@ -15,12 +15,19 @@ namespace HeartToHeartNon_Profit.Repositories
         private const string Format = "dd-MM-yyyy";
         private readonly HeartToHeartContext _context;
         private readonly IRandomService _service;
+
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="service"></param>
         public AuthRepository(HeartToHeartContext context, IRandomService service)
         {
             _context = context;
             _service = service;
            
         }
+
         /// <summary>
         ///  Login authentication by email and password 
         /// </summary>
@@ -29,6 +36,23 @@ namespace HeartToHeartNon_Profit.Repositories
         public async Task<User> Login(LoginInput userIn)
         {
             var user = await _context.Users.Where(u => u.Email == userIn.Email.ToLower() && u.Status == true && u.RoleName != "SYSADMIN").SingleOrDefaultAsync();
+            if (user == null)
+                return null;
+
+            if (!_service.VerifyPasswordHash(userIn.Password, user.PasswordHash, user.PasswordSalt))
+                return null;
+
+            return user;
+        }
+
+        /// <summary>
+        /// Login To ADMIN PAGE
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public async Task<User> LoginAdmin(LoginInput userIn)
+        {
+            var user = await _context.Users.Where(u => u.Email == userIn.Email.ToLower() && u.Status == true && u.RoleName == "SYSADMIN").SingleOrDefaultAsync();
             if (user == null)
                 return null;
 

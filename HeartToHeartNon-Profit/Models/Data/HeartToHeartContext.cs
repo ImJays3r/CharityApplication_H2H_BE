@@ -57,6 +57,11 @@ namespace HeartToHeartNon_Profit.Models.Data
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Photourl)
+                    .HasMaxLength(10)
+                    .HasColumnName("photourl")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Title)
