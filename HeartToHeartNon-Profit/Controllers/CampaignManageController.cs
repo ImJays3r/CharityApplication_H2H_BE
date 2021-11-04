@@ -38,9 +38,10 @@ namespace HeartToHeartNon_Profit.Controllers
         public async Task<IActionResult> CreateCampaign(CreateCampaignInput camIn)
         {
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            if (await _repo.CreateCampaign(camIn))
+            int id = await _repo.CreateCampaign(camIn);
+            if (id > 0)
             {
-                return Ok();
+                return Ok(id);
             }
             else
             {
