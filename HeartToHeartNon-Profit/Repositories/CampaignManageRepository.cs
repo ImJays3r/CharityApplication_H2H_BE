@@ -1,6 +1,7 @@
 ﻿using HeartToHeartNon_Profit.Models.Data;
 using HeartToHeartNon_Profit.Models.Input;
 using HeartToHeartNon_Profit.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,6 +15,10 @@ namespace HeartToHeartNon_Profit.Repositories
         private const string FormatDate = "dd-MM-yyyy";
         private readonly HeartToHeartContext _context;
 
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="context"></param>
         public CampaignManageRepository(HeartToHeartContext context)
         {
             _context = context;
@@ -38,10 +43,30 @@ namespace HeartToHeartNon_Profit.Repositories
                 EndDate = DateTime.ParseExact(camIn.EndDate, FormatDate, CultureInfo.InvariantCulture),
                 Description = camIn.Description,
                 Location = camIn.Location,
+                Photourl = null,
                 Status = true
             };
             await _context.Campaigns.AddAsync(campaign);
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<int> UpdateCamPicture(string url, int id)
+        {
+            try
+            {
+                var campaign = await _context.Campaigns.Where(a => a.CampaignId == id).FirstOrDefaultAsync();
+                if (campaign != null)
+                {
+                    campaign.Photourl = url;
+                }
+                if (await _context.SaveChangesAsync() > 0)
+                    return 1;
+                return 3;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
         }
     }
 }

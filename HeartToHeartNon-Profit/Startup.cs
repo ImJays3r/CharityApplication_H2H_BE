@@ -48,6 +48,11 @@ namespace HeartToHeartNon_Profit
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRandomService, RandomService>();
             services.AddScoped<ICampaignManageRepository, CampaignManageRepository>();
+            services.AddScoped<ICampaignRepository, CampaignRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddAutoMapper(typeof(CampaignRepository).Assembly);
+
 
             services.AddDbContext<HeartToHeartContext>(options => options.UseSqlServer(Configuration.GetConnectionString("H2H")));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -76,7 +81,16 @@ namespace HeartToHeartNon_Profit
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
+
+            app.UseCors(a => a
+            .SetIsOriginAllowed(origin => true)
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials()
+            );
 
             app.UseEndpoints(endpoints =>
             {

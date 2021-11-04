@@ -18,6 +18,11 @@ namespace HeartToHeartNon_Profit.Controllers
         private readonly IAuthRepository _repo;
         private readonly ITokenService _tokenService;
 
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="repo"></param>
+        /// <param name="tokenService"></param>
         public AuthController(IAuthRepository repo, ITokenService tokenService)
         {
             _repo = repo;
@@ -33,6 +38,30 @@ namespace HeartToHeartNon_Profit.Controllers
         public async Task<IActionResult> Login(LoginInput userIn)
         {
             var user = await _repo.Login(userIn);
+
+            if (user == null)
+                return Unauthorized();
+
+            LoginOutput login = new()
+            {
+                UserId = user.UserId,
+                UserName = user.UserName,
+                Email = user.Email,
+                Token = _tokenService.CreateToken(user)
+            };
+            return Ok(login);
+        }
+
+
+        /// <summary>
+        /// Login to Admin Page
+        /// </summary>
+        /// <param name="userIn"></param>
+        /// <returns></returns>
+        [HttpPost("login-admin")]
+        public async Task<IActionResult> LoginAdmin(LoginInput userIn)
+        {
+            var user = await _repo.LoginAdmin(userIn);
 
             if (user == null)
                 return Unauthorized();

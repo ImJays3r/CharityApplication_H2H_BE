@@ -24,6 +24,7 @@ namespace HeartToHeartNon_Profit.Models.Data
         public DateTime? EndDate { get; set; }
         public DateTime CreateDate { get; set; }
         public bool Status { get; set; }
+        public string Photourl { get; set; }
 
         public virtual User Admin { get; set; }
         public virtual ICollection<Plan> Plans { get; set; }
