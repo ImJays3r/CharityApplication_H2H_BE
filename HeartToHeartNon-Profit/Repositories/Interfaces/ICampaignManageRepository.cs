@@ -13,7 +13,7 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         /// </summary>
         /// <param name="camIn"></param>
         /// <returns></returns>
-        Task<bool> CreateCampaign(CreateCampaignInput camIn);
+        Task<int> CreateCampaign(CreateCampaignInput camIn);
 
         /// <summary>
         /// update picture when create campaign

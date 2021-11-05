@@ -26,11 +26,11 @@ namespace HeartToHeartNon_Profit.Repositories
         }
 
         /// <summary>
-        /// Create New Campaign 
+        /// Create New Campaign return id
         /// </summary>
         /// <param name="camIn"></param>
         /// <returns></returns>
-        public async Task<bool> CreateCampaign(CreateCampaignInput camIn)
+        public async Task<int> CreateCampaign(CreateCampaignInput camIn)
         {
             Campaign campaign = new()
             {
@@ -47,9 +47,16 @@ namespace HeartToHeartNon_Profit.Repositories
                 Status = true
             };
             await _context.Campaigns.AddAsync(campaign);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
+            return  campaign.CampaignId;
         }
 
+        /// <summary>
+        /// update campaign picture
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<int> UpdateCamPicture(string url, int id)
         {
             try
