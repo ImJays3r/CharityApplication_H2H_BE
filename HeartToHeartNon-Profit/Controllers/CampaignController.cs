@@ -29,6 +29,11 @@ namespace HeartToHeartNon_Profit.Controllers
             _repo = repo;
             _mapper = mapper;
         }
+
+        /// <summary>
+        /// get list campaign 
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetCampaigns()

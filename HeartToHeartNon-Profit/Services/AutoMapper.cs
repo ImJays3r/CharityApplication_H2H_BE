@@ -15,7 +15,9 @@ namespace HeartToHeartNon_Profit.Services
             CreateMap<Campaign, ListCampaign>()
                 .ForMember(d => d.UserName, option => option
                  .MapFrom(src => src.Admin.UserName));
-            CreateMap<User, ProfileOutput>();
+            CreateMap<User, ProfileOutput>()
+                .ForMember(d => d.DateOfBirth, option => option
+                .MapFrom(src => src.DateOfBirth.ToString("dd-MM-yyyy")));
         }
     }
 }

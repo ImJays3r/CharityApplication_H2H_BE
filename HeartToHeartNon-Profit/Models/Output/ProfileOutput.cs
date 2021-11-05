@@ -30,7 +30,7 @@ namespace HeartToHeartNon_Profit.Models.Output
         /// <summary>
         /// date of birth
         /// </summary>
-        public DateTime DateOfBirth { get; set; }
+        public String DateOfBirth { get; set; }
 
         /// <summary>
         /// role name of user
