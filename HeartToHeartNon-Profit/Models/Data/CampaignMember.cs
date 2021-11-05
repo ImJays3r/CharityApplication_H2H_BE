@@ -9,7 +9,6 @@ namespace HeartToHeartNon_Profit.Models.Data
     {
         public int CampaignId { get; set; }
         public int MemberId { get; set; }
-        public int ManagerId { get; set; }
 
         public virtual Campaign Campaign { get; set; }
         public virtual User Member { get; set; }
