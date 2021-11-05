@@ -43,16 +43,21 @@ namespace HeartToHeartNon_Profit.Models.Output
         /// <summary>
         /// start date
         /// </summary>
-        public DateTime? StartDate { get; set; }
+        public string StartDate { get; set; }
 
         /// <summary>
         /// end date
         /// </summary
-        public DateTime? EndDate { get; set; }
+        public string EndDate { get; set; }
 
         /// <summary>
         /// status of campaign
         /// </summary>
         public bool Status { get; set; }
+
+        /// <summary>
+        /// photo url
+        /// </summary>
+        public string Photourl { get; set; }
     }
 }

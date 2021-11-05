@@ -21,8 +21,8 @@ namespace HeartToHeartNon_Profit.Models.Data
         public string Description { get; set; }
         public string Location { get; set; }
         public int AdminId { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public DateTime CreateDate { get; set; }
         public bool Status { get; set; }
         public string Photourl { get; set; }

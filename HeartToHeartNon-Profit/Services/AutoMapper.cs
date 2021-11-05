@@ -14,7 +14,13 @@ namespace HeartToHeartNon_Profit.Services
         {
             CreateMap<Campaign, ListCampaign>()
                 .ForMember(d => d.UserName, option => option
-                 .MapFrom(src => src.Admin.UserName));
+                 .MapFrom(src => src.Admin.UserName))
+                .ForMember(d => d.StartDate, option => option
+                .MapFrom(src => src.StartDate.ToString("dd-MM-yyyy")))
+                .ForMember(c => c.EndDate, option => option
+                .MapFrom(src => src.EndDate.ToString("dd-MM-yyyy")));
+
+
             CreateMap<User, ProfileOutput>()
                 .ForMember(d => d.DateOfBirth, option => option
                 .MapFrom(src => src.DateOfBirth.ToString("dd-MM-yyyy")));
