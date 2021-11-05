@@ -21,7 +21,7 @@ namespace HeartToHeartNon_Profit.Models.Data
         public virtual DbSet<CampaignManager> CampaignManagers { get; set; }
         public virtual DbSet<CampaignMember> CampaignMembers { get; set; }
         public virtual DbSet<Medium> Media { get; set; }
-        public virtual DbSet<Plan> Plans { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Report> Reports { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<TaskDetail> TaskDetails { get; set; }
@@ -37,7 +37,7 @@ namespace HeartToHeartNon_Profit.Models.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS");
 
             modelBuilder.Entity<Campaign>(entity =>
             {
@@ -56,7 +56,9 @@ namespace HeartToHeartNon_Profit.Models.Data
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Photourl).IsUnicode(false);
+                entity.Property(e => e.Photourl)
+                    .IsUnicode(false)
+                    .HasColumnName("photourl");
 
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
 
@@ -79,16 +81,16 @@ namespace HeartToHeartNon_Profit.Models.Data
 
             modelBuilder.Entity<CampaignManager>(entity =>
             {
-                entity.HasKey(e => new { e.CampaignId, e.ManagerId });
+                entity.HasNoKey();
 
                 entity.HasOne(d => d.Campaign)
-                    .WithMany(p => p.CampaignManagers)
+                    .WithMany()
                     .HasForeignKey(d => d.CampaignId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CapaignManagers_Campaigns");
 
                 entity.HasOne(d => d.Manager)
-                    .WithMany(p => p.CampaignManagers)
+                    .WithMany()
                     .HasForeignKey(d => d.ManagerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CapaignManagers_Users");
@@ -125,40 +127,45 @@ namespace HeartToHeartNon_Profit.Models.Data
                     .WithMany(p => p.Media)
                     .HasForeignKey(d => d.ReportId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Media_Posts");
+
+                entity.HasOne(d => d.ReportNavigation)
+                    .WithMany(p => p.Media)
+                    .HasForeignKey(d => d.ReportId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Media_Reports");
             });
 
-            modelBuilder.Entity<Plan>(entity =>
+            
+
+            modelBuilder.Entity<Post>(entity =>
             {
-                entity.Property(e => e.CreateDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Description).IsUnicode(false);
-
-                entity.Property(e => e.EndDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Location)
+                entity.Property(e => e.Content)
                     .IsRequired()
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
-                entity.Property(e => e.StartDate).HasColumnType("datetime");
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Title)
+                entity.Property(e => e.Description)
                     .IsRequired()
-                    .HasMaxLength(50)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.Campaign)
-                    .WithMany(p => p.Plans)
-                    .HasForeignKey(d => d.CampaignId)
+                entity.Property(e => e.Tittle)
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Report)
+                    .WithMany(p => p.Posts)
+                    .HasForeignKey(d => d.ReportId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Plans_Campaigns");
+                    .HasConstraintName("FK_Posts_Reports");
             });
 
             modelBuilder.Entity<Report>(entity =>
             {
-                entity.Property(e => e.CreateDate).HasColumnType("date");
-
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasMaxLength(200)
@@ -258,7 +265,8 @@ namespace HeartToHeartNon_Profit.Models.Data
 
                 entity.Property(e => e.Gender)
                     .HasMaxLength(10)
-                    .IsUnicode(false);
+                    .HasColumnName("gender")
+                    .IsFixedLength(true);
 
                 entity.Property(e => e.PasswordHash).IsRequired();
 

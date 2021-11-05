@@ -95,5 +95,34 @@ namespace HeartToHeartNon_Profit.Controllers
                 return BadRequest();
             }
         }
+
+        /// <summary>
+        /// Update User Avatar
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPut("update-picture")]
+        public async Task<IActionResult> UpdateUserPicture(String url, int id)
+        {
+
+            int check = await _repo.UpdateUserPicture(url, id);
+            if (check == 2)
+            {
+                return Unauthorized();
+            }
+            else if (check == 1)
+            {
+                return Ok();
+            }
+            else if (check == 3)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

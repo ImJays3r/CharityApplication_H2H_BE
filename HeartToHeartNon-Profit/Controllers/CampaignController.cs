@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace HeartToHeartNon_Profit.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CampaignController : ControllerBase
@@ -34,7 +35,7 @@ namespace HeartToHeartNon_Profit.Controllers
         /// get list campaign 
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+       
         [HttpGet]
         public async Task<IActionResult> GetCampaigns()
         {
@@ -61,6 +62,43 @@ namespace HeartToHeartNon_Profit.Controllers
 
             return NoContent();
            
+        }
+
+        /// <summary>
+        /// get campaign detail
+        /// </summary>
+        /// <param name="campaignId"></param>
+        /// <returns></returns>
+        
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCampaignDetail(int id)
+        {
+            var campaign = await _repo.GetCampaignDetail(id);
+            int totalPar = await _repo.GetTotalParticipant(id);
+            int totalTask = await _repo.GetTotalTask(id);
+            var TaskList = await _repo.GetListTask(id);
+            int TotalReport = await _repo.GetTotalReport(TaskList);
+
+            CampaignDetailOutput result = new()
+            {
+                CampaignId = campaign.CampaignId,
+                Title = campaign.Title,
+                Type = campaign.Type,
+                AdminId = campaign.AdminId,
+                Budget = campaign.Budget,
+                CreateDate = campaign.CreateDate.ToString("dd-MM-yyyy"),
+                Description = campaign.Description,
+                EndDate = campaign.EndDate.ToString("dd-MM-yyyy"),
+                Location = campaign.Location,
+                Photourl = campaign.Photourl,
+                StartDate = campaign.StartDate.ToString("dd-MM-yyyy"),
+                Status = campaign.Status,
+                totalParticipant = totalPar,
+                totalReport = TotalReport,
+                totalTask = totalTask
+            };
+
+            return Ok(result);
         }
     }
 }

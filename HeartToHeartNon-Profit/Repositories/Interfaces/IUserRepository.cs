@@ -14,5 +14,7 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         /// <param name="userId"></param>
         /// <returns></returns>
         Task<User> GetUserProfile(int userId);
+
+
     }
 }

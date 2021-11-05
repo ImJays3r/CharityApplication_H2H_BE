@@ -23,6 +23,17 @@ namespace HeartToHeartNon_Profit.Repositories
         }
 
         /// <summary>
+        /// get campaign detail
+        /// </summary>
+        /// <param name="campaignId"></param>
+        /// <returns></returns>
+        public async Task<Campaign> GetCampaignDetail(int campaignId)
+        {
+            var campaign = await _context.Campaigns.Where(a => a.CampaignId == campaignId).FirstOrDefaultAsync();
+            return campaign;
+        }
+
+        /// <summary>
         /// get list campaign all status for admin 
         /// </summary>
         /// <returns></returns>
@@ -61,6 +72,85 @@ namespace HeartToHeartNon_Profit.Repositories
                 .ToListAsync();
 
             return campaignMember;
+        }
+
+        /// <summary>
+        /// get total task
+        /// </summary>
+        /// <param name="campaignId"></param>
+        /// <returns></returns>
+        public async Task<int> GetTotalTask(int campaignId)
+        {
+            int totalTask;
+            var CampaignTask = await _context.Tasks
+                .Include(c => c.Campaign)
+                .Where(u => u.CampaignId == campaignId)
+                .ToListAsync();
+            totalTask = CampaignTask.Count();
+            return totalTask;
+        }
+
+        /// <summary>
+        /// get total participant
+        /// </summary>
+        /// <param name="campaignId"></param>
+        /// <returns></returns>
+        public async Task<int> GetTotalParticipant(int campaignId)
+        {
+            int totalMember;
+            int totalManager;
+            int totalParticipant;
+
+            var campaignMember = await _context.CampaignMembers
+                .Include(c => c.Campaign)
+                .Where(u => u.CampaignId == campaignId)
+                .ToListAsync();
+            totalMember = campaignMember.Count();
+            var campaignManager = await _context.CampaignManagers
+                .Include(c => c.Campaign)
+                .Where(u => u.CampaignId == campaignId)
+                .ToListAsync();
+            totalManager = campaignManager.Count();
+
+            totalParticipant = totalMember + totalManager + 1;
+
+            return totalParticipant;
+        }
+
+        /// <summary>
+        /// get total report
+        /// </summary>
+        /// <param name="TaskList"></param>
+        /// <returns></returns>
+        public async Task<int> GetTotalReport(IEnumerable<Models.Data.Task> TaskList)
+        {
+            int totalReprot = 0 ;
+
+            foreach (var task in TaskList)
+            {
+                int total;
+                var reportTask = await _context.Reports
+                .Include(c => c.Task)
+                .Where(u => u.TaskId == task.TaskId)
+                .ToListAsync();
+                total = reportTask.Count();
+                totalReprot = totalReprot + total;
+            }
+            return totalReprot;
+        }
+
+        /// <summary>
+        /// get task list of campaign
+        /// </summary>
+        /// <param name="campaignId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Models.Data.Task>> GetListTask(int campaignId)
+        {
+            var CampaignTaskList = await _context.Tasks
+                .Include(c => c.Campaign)
+                .Where(u => u.CampaignId == campaignId)
+                .ToListAsync();
+            return CampaignTaskList;
         }
     }
 }

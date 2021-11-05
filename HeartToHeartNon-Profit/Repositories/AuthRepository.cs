@@ -91,6 +91,31 @@ namespace HeartToHeartNon_Profit.Repositories
         }
 
         /// <summary>
+        /// Update avatar after create user
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<int> UpdateUserPicture(string url, int id)
+        {
+            try
+            {
+                var user = await _context.Users.Where(a => a.UserId == id).FirstOrDefaultAsync();
+                if (user != null)
+                {
+                    user.AvatarUrl = url;
+                }
+                if (await _context.SaveChangesAsync() > 0)
+                    return 1;
+                return 3;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
         /// check existed email
         /// </summary>
         /// <param name="email"></param>

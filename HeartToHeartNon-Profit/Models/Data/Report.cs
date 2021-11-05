@@ -10,6 +10,7 @@ namespace HeartToHeartNon_Profit.Models.Data
         public Report()
         {
             Media = new HashSet<Medium>();
+            Posts = new HashSet<Post>();
         }
 
         public int ReportId { get; set; }
@@ -19,10 +20,10 @@ namespace HeartToHeartNon_Profit.Models.Data
         public string ReportType { get; set; }
         public decimal Value { get; set; }
         public bool Status { get; set; }
-        public DateTime CreateDate { get; set; }
 
         public virtual User Member { get; set; }
         public virtual Task Task { get; set; }
         public virtual ICollection<Medium> Media { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
     }
 }

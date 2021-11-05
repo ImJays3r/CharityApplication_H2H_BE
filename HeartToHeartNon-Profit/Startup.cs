@@ -65,6 +65,7 @@ namespace HeartToHeartNon_Profit
                     ValidateAudience = false
                 };
             });
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,7 +85,7 @@ namespace HeartToHeartNon_Profit
             app.UseAuthentication();
 
             app.UseAuthorization();
-
+            app.UseDeveloperExceptionPage();
             app.UseCors(a => a
             .SetIsOriginAllowed(origin => true)
             .AllowAnyMethod()

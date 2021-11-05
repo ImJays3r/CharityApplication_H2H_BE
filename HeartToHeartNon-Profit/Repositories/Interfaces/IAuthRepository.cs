@@ -30,10 +30,18 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         Task<bool> UserExists(string email);
 
         /// <summary>
+        /// update picture when create user
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        Task<int> UpdateUserPicture(String url, int id);
+
+        /// <summary>
         /// Login To ADMIN PAGE
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
         Task<User> LoginAdmin(LoginInput user);
+
     }
 }
