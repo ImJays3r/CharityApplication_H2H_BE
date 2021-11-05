@@ -39,9 +39,28 @@ namespace HeartToHeartNon_Profit.Controllers
         public async Task<IActionResult> GetCampaigns()
         {
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var campaigns = await _repo.GetListCampaign(userId);
-            var resultList = _mapper.Map<IEnumerable<ListCampaign>>(campaigns);
-            return Ok(resultList);
+            String Role = User.FindFirst(ClaimTypes.Role).Value.ToString();
+            if (Role == "ADMIN")
+            {
+                var campaigns = await _repo.GetListCampaign(userId);
+                var resultList = _mapper.Map<IEnumerable<ListCampaign>>(campaigns);
+                return Ok(resultList);
+            }
+            else if (Role == "MANAGER")
+            {
+                var campaigns = await _repo.GetListCampaignManager(userId);
+                var resultList = _mapper.Map<IEnumerable<ListCampaign>>(campaigns);
+                return Ok(resultList);
+            }
+            else if (Role == "MEMBER")
+            {
+                var campaigns = await _repo.GetListCampaignMember(userId);
+                var resultList = _mapper.Map<IEnumerable<ListCampaign>>(campaigns);
+                return Ok(resultList);
+            }
+
+            return NoContent();
+           
         }
     }
 }
