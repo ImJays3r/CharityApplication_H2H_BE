@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using HeartToHeartNon_Profit.Models.Output;
 
 namespace HeartToHeartNon_Profit.Controllers
 {
@@ -39,9 +40,13 @@ namespace HeartToHeartNon_Profit.Controllers
         {
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             int id = await _repo.CreateCampaign(camIn);
+            CreateCampaignOutput camId = new()
+            {
+                CampaignId = id
+            };
             if (id > 0)
             {
-                return Ok(id);
+                return Ok(camId);
             }
             else
             {

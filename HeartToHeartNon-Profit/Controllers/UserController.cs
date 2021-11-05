@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace HeartToHeartNon_Profit.Controllers
@@ -34,10 +35,11 @@ namespace HeartToHeartNon_Profit.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(int id)
+        [HttpGet]
+        public async Task<IActionResult> GetUser()
         {
-            var user = await _repo.GetUserProfile(id);
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var user = await _repo.GetUserProfile(userId);
             if (user == null)
                 return NotFound();
             var resultUser = _mapper.Map<ProfileOutput>(user);
