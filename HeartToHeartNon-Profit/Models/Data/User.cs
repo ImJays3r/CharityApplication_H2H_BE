@@ -9,6 +9,7 @@ namespace HeartToHeartNon_Profit.Models.Data
     {
         public User()
         {
+            CampaignManagers = new HashSet<CampaignManager>();
             Campaigns = new HashSet<Campaign>();
             Reports = new HashSet<Report>();
             Tasks = new HashSet<Task>();
@@ -17,6 +18,7 @@ namespace HeartToHeartNon_Profit.Models.Data
         public int UserId { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
+        public string Gender { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public string Phone { get; set; }
@@ -26,8 +28,8 @@ namespace HeartToHeartNon_Profit.Models.Data
         public string CredentialId { get; set; }
         public bool Status { get; set; }
         public string AvatarUrl { get; set; }
-        public string Gender { get; set; }
 
+        public virtual ICollection<CampaignManager> CampaignManagers { get; set; }
         public virtual ICollection<Campaign> Campaigns { get; set; }
         public virtual ICollection<Report> Reports { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }

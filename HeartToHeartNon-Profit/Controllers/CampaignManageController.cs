@@ -64,7 +64,6 @@ namespace HeartToHeartNon_Profit.Controllers
         public async Task<IActionResult> UpdateCamPicture(String url, int id)
         {
          
-
             int check = await _repo.UpdateCamPicture(url, id);
             if (check == 2)
             {

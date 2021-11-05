@@ -76,9 +76,9 @@ namespace HeartToHeartNon_Profit
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HeartToHeartNon_Profit v1"));
             }
-
-            ///app.UseHttpsRedirection();
-
+            
+            //app.UseHttpsRedirection();
+            app.UseCors(a => a.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
             app.UseRouting();
 
             app.UseAuthentication();
