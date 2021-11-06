@@ -54,7 +54,7 @@ namespace HeartToHeartNon_Profit.Models.Input
         /// <summary>
         /// phone
         /// </summary>
-        [Required(ErrorMessage = "Can't be empty"), Phone]
+        [RegularExpression("(84|0[3|5|7|8|9])+([0-9]{8})", ErrorMessage = "Not A Real Phone number")]
         public string Phone { get; set; }
     }
 }

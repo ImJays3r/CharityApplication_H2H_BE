@@ -107,7 +107,7 @@ namespace HeartToHeartNon_Profit.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
 
-        [HttpGet("campaign-id")]
+        [HttpGet("campaign/{id}")]
         public async Task<IActionResult> GetCampaignListParticipant(int id)
         {
             var listMember = await _repo.GetListMember(id);

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HeartToHeartNon_Profit.Models.Input;
 using HeartToHeartNon_Profit.Models.Output;
 using HeartToHeartNon_Profit.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -44,6 +45,35 @@ namespace HeartToHeartNon_Profit.Controllers
                 return NotFound();
             var resultUser = _mapper.Map<ProfileOutput>(user);
             return Ok(resultUser);
+        }
+
+        /// <summary>
+        /// Update User Avatar
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPut("update-profile")]
+        public async Task<IActionResult> UpdateUserPicture(ProfileUpdateInput input)
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            int check = await _repo.UpdateUserProfile(userId, input);
+            if (check == 2)
+            {
+                return Unauthorized();
+            }
+            else if (check == 1)
+            {
+                return Ok();
+            }
+            else if (check == 3)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }
