@@ -54,6 +54,24 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         Task<IEnumerable<Models.Data.Task>> GetListTask(int campaignId);
 
         /// <summary>
+        /// get list member of campaign
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<CampaignMember>> GetListMember(int campaignId);
+
+        /// <summary>
+        /// get list manager of campaign
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<CampaignManager>> GetListManager(int campaignId);
+
+        /// <summary>
+        /// get admin information for list participant
+        /// </summary>
+        /// <returns></returns>
+        Task<Campaign> GetAdminForList(int campaignId);
+
+        /// <summary>
         /// get total Report
         /// </summary>
         /// <param name="TaskList"></param>

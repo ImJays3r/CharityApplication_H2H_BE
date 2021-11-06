@@ -152,5 +152,49 @@ namespace HeartToHeartNon_Profit.Repositories
                 .ToListAsync();
             return CampaignTaskList;
         }
+
+        /// <summary>
+        /// get List member
+        /// </summary>
+        /// <param name="campaignId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<CampaignMember>> GetListMember(int campaignId)
+        {
+            var listMember = await _context.CampaignMembers
+                 .Include(c => c.Campaign)
+                 .Where(u => u.CampaignId == campaignId)
+                 .ToListAsync();
+
+            return listMember;
+        }
+
+        /// <summary>
+        /// get list manager
+        /// </summary>
+        /// <param name="campaignId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<CampaignManager>> GetListManager(int campaignId)
+        {
+            var listManager = await _context.CampaignManagers
+                 .Include(c => c.Campaign)
+                 .Where(u => u.CampaignId == campaignId)
+                 .ToListAsync();
+
+            return listManager;
+        }
+
+        /// <summary>
+        /// get admin detail for list participant
+        /// </summary>
+        /// <param name="campaignId"></param>
+        /// <returns></returns>
+        public async Task<Campaign> GetAdminForList(int campaignId)
+        {
+            var adminDetail =  await _context.Campaigns
+                .Include(u => u.Admin)
+                .Where(c => c.CampaignId == campaignId)
+                .FirstOrDefaultAsync();
+            return adminDetail;
+        }
     }
 }

@@ -35,7 +35,7 @@ namespace HeartToHeartNon_Profit.Controllers
         /// get list campaign 
         /// </summary>
         /// <returns></returns>
-       
+
         [HttpGet]
         public async Task<IActionResult> GetCampaigns()
         {
@@ -61,7 +61,7 @@ namespace HeartToHeartNon_Profit.Controllers
             }
 
             return NoContent();
-           
+
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace HeartToHeartNon_Profit.Controllers
         /// </summary>
         /// <param name="campaignId"></param>
         /// <returns></returns>
-        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCampaignDetail(int id)
         {
@@ -96,6 +96,29 @@ namespace HeartToHeartNon_Profit.Controllers
                 totalParticipant = totalPar,
                 totalReport = TotalReport,
                 totalTask = totalTask
+            };
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// get campaign list participant
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
+        [HttpGet("campaign-id")]
+        public async Task<IActionResult> GetCampaignListParticipant(int id)
+        {
+            var listMember = await _repo.GetListMember(id);
+            var listManager = await _repo.GetListManager(id);
+            var resultAdminInfor = await _repo.GetAdminForList(id);
+
+            ListParticipant result = new()
+            {
+                listMember = (ICollection<ListUserOutput>)_mapper.Map<IEnumerable<ListUserOutput>>(listMember),
+                listManager = (ICollection<ListUserOutput>)_mapper.Map<IEnumerable<ListUserOutput>>(listManager),
+                admin = _mapper.Map<ListUserOutput>(resultAdminInfor)
             };
 
             return Ok(result);

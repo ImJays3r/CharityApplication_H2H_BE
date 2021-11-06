@@ -71,6 +71,43 @@ namespace HeartToHeartNon_Profit.Services
             CreateMap<User, ProfileOutput>()
                 .ForMember(d => d.DateOfBirth, option => option
                 .MapFrom(src => src.DateOfBirth.ToString("dd-MM-yyyy")));
+
+            CreateMap<CampaignMember, ListUserOutput>()
+               .ForMember(d => d.UserId, option => option
+                .MapFrom(src => src.MemberId))
+                .ForMember(d => d.UserName, option => option
+                .MapFrom(src => src.Member.UserName))
+                .ForMember(d => d.RoleName, option => option
+                .MapFrom(src => src.Member.RoleName))
+                .ForMember(d => d.AvatarUrl, option => option
+                .MapFrom(src => src.Member.AvatarUrl))
+                .ForMember(d => d.Phone, option => option
+                .MapFrom(src => src.Member.Phone));
+
+            CreateMap<CampaignManager, ListUserOutput>()
+               .ForMember(d => d.UserId, option => option
+                .MapFrom(src => src.ManagerId))
+                .ForMember(d => d.UserName, option => option
+                .MapFrom(src => src.Manager.UserName))
+                .ForMember(d => d.RoleName, option => option
+                .MapFrom(src => src.Manager.RoleName))
+                .ForMember(d => d.AvatarUrl, option => option
+                .MapFrom(src => src.Manager.AvatarUrl))
+                .ForMember(d => d.Phone, option => option
+                .MapFrom(src => src.Manager.Phone));
+
+            CreateMap<Campaign, ListUserOutput>()
+               .ForMember(d => d.UserId, option => option
+                .MapFrom(src => src.AdminId))
+                .ForMember(d => d.UserName, option => option
+                .MapFrom(src => src.Admin.UserName))
+                .ForMember(d => d.RoleName, option => option
+                .MapFrom(src => src.Admin.RoleName))
+                .ForMember(d => d.AvatarUrl, option => option
+                .MapFrom(src => src.Admin.AvatarUrl))
+                .ForMember(d => d.Phone, option => option
+                .MapFrom(src => src.Admin.Phone));
+
         }
     }
 }
