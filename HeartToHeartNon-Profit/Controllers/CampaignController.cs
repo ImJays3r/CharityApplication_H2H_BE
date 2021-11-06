@@ -47,13 +47,13 @@ namespace HeartToHeartNon_Profit.Controllers
                 var resultList = _mapper.Map<IEnumerable<ListCampaign>>(campaigns);
                 return Ok(resultList);
             }
-            else if (Role == "MANAGER")
+            else if (Role == "MANAGER" || Role == "ADMANAGER")
             {
                 var campaigns = await _repo.GetListCampaignManager(userId);
                 var resultList = _mapper.Map<IEnumerable<ListCampaign>>(campaigns);
                 return Ok(resultList);
             }
-            else if (Role == "MEMBER")
+            else if (Role == "MEMBER" || Role == "ADMEMBER")
             {
                 var campaigns = await _repo.GetListCampaignMember(userId);
                 var resultList = _mapper.Map<IEnumerable<ListCampaign>>(campaigns);

@@ -54,7 +54,7 @@ namespace HeartToHeartNon_Profit.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPut("update-profile")]
-        public async Task<IActionResult> UpdateUserPicture(ProfileUpdateInput input)
+        public async Task<IActionResult> UpdateUserProfile(ProfileUpdateInput input)
         {
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             int check = await _repo.UpdateUserProfile(userId, input);
