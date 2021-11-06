@@ -96,14 +96,14 @@ namespace HeartToHeartNon_Profit.Repositories
         /// <param name="url"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<int> UpdateUserPicture(string url, int id)
+        public async Task<int> UpdateUserPicture(UpdateAvatarInput input)
         {
             try
             {
-                var user = await _context.Users.Where(a => a.UserId == id).FirstOrDefaultAsync();
+                var user = await _context.Users.Where(a => a.UserId == input.UserId).FirstOrDefaultAsync();
                 if (user != null)
                 {
-                    user.AvatarUrl = url;
+                    user.AvatarUrl = input.AvatarUrl;
                 }
                 if (await _context.SaveChangesAsync() > 0)
                     return 1;

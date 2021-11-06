@@ -57,14 +57,14 @@ namespace HeartToHeartNon_Profit.Repositories
         /// <param name="url"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<int> UpdateCamPicture(string url, int id)
+        public async Task<int> UpdateCamPicture(UpdatePictureCampaignInput input)
         {
             try
             {
-                var campaign = await _context.Campaigns.Where(a => a.CampaignId == id).FirstOrDefaultAsync();
+                var campaign = await _context.Campaigns.Where(a => a.CampaignId == input.CampaignId).FirstOrDefaultAsync();
                 if (campaign != null)
                 {
-                    campaign.Photourl = url;
+                    campaign.Photourl = input.Photourl;
                 }
                 if (await _context.SaveChangesAsync() > 0)
                     return 1;

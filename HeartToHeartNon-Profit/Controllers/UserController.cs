@@ -75,5 +75,34 @@ namespace HeartToHeartNon_Profit.Controllers
                 return BadRequest();
             }
         }
+
+        /// <summary>
+        /// Update User Avatar
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPut("apply-admin")]
+        public async Task<IActionResult> ApplyToAdminCampaign(ApplyAdminInput input)
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            int check = await _repo.ApplyToCampaignAdmin(userId, input);
+            if (check == 2)
+            {
+                return Unauthorized();
+            }
+            else if (check == 1)
+            {
+                return Ok();
+            }
+            else if (check == 3)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

@@ -20,6 +20,6 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        Task<int> UpdateCamPicture(String url, int id);
+        Task<int> UpdateCamPicture(UpdatePictureCampaignInput input);
     }
 }

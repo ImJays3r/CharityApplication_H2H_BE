@@ -34,7 +34,7 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        Task<int> UpdateUserPicture(String url, int id);
+        Task<int> UpdateUserPicture(UpdateAvatarInput input);
 
         /// <summary>
         /// Login To ADMIN PAGE

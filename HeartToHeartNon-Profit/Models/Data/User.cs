@@ -27,6 +27,8 @@ namespace HeartToHeartNon_Profit.Models.Data
         public bool Status { get; set; }
         public string AvatarUrl { get; set; }
         public string Gender { get; set; }
+        public string CredentialFrontUrl { get; set; }
+        public string CredentialBackUrl { get; set; }
 
         public virtual ICollection<Campaign> Campaigns { get; set; }
         public virtual ICollection<Report> Reports { get; set; }

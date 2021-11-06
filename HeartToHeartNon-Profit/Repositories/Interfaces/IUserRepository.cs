@@ -23,7 +23,12 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         /// <returns></returns>
         Task<int> UpdateUserProfile(int userId, ProfileUpdateInput input);
 
-
+        /// <summary>
+        /// user apply to be campaign Admin
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<int> ApplyToCampaignAdmin(int userId, ApplyAdminInput input);
 
     }
 }

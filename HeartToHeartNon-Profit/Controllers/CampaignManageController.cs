@@ -61,10 +61,10 @@ namespace HeartToHeartNon_Profit.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPut("update-picture")]
-        public async Task<IActionResult> UpdateCamPicture(String url, int id)
+        public async Task<IActionResult> UpdateCamPicture(UpdatePictureCampaignInput input)
         {
          
-            int check = await _repo.UpdateCamPicture(url, id);
+            int check = await _repo.UpdateCamPicture(input);
             if (check == 2)
             {
                 return Unauthorized();

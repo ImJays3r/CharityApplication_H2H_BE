@@ -21,6 +21,7 @@ namespace HeartToHeartNon_Profit.Models.Data
         public virtual DbSet<CampaignManager> CampaignManagers { get; set; }
         public virtual DbSet<CampaignMember> CampaignMembers { get; set; }
         public virtual DbSet<Medium> Media { get; set; }
+        public virtual DbSet<Plan> Plans { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Report> Reports { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
@@ -136,7 +137,32 @@ namespace HeartToHeartNon_Profit.Models.Data
                     .HasConstraintName("FK_Media_Reports");
             });
 
-            
+            modelBuilder.Entity<Plan>(entity =>
+            {
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Description).IsUnicode(false);
+
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Location)
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Campaign)
+                    .WithMany(p => p.Plans)
+                    .HasForeignKey(d => d.CampaignId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Plans_Campaigns");
+            });
 
             modelBuilder.Entity<Post>(entity =>
             {
@@ -250,6 +276,8 @@ namespace HeartToHeartNon_Profit.Models.Data
             modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.AvatarUrl).IsUnicode(false);
+
+                entity.Property(e => e.CredentialFrontUrl).IsUnicode(false);
 
                 entity.Property(e => e.CredentialId)
                     .HasMaxLength(20)

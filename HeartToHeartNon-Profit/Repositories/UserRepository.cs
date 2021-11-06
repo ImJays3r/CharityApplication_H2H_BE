@@ -59,5 +59,39 @@ namespace HeartToHeartNon_Profit.Repositories
                 return 0;
             }
         }
+
+        /// <summary>
+        /// apply to be campaign admin
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="front"></param>
+        /// <param name="back"></param>
+        /// <returns></returns>
+        public async Task<int> ApplyToCampaignAdmin(int userId, ApplyAdminInput input)
+        {
+            try
+            {
+                var user = await _context.Users.Where(a => a.UserId == userId && a.RoleName != "ADMIN").FirstOrDefaultAsync();
+                if (user != null)
+                {
+                    user.CredentialBackUrl = input.CredentialBackUrl;
+                    user.CredentialFrontUrl = input.CredentialFrontUrl;
+                    if(user.RoleName == "MEMBER")
+                    {
+                        user.RoleName = "ADMEMBER";
+                    } else if (user.RoleName == "MANAGER")
+                    {
+                        user.RoleName = "ADMANAGER";
+                    }
+                }
+                if (await _context.SaveChangesAsync() > 0)
+                    return 1;
+                return 3;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
     }
 }
