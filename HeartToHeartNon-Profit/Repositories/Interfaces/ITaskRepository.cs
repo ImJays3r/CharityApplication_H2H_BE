@@ -21,5 +21,17 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         /// <param name="taskId"></param>
         /// <returns></returns>
         Task<Models.Data.Task> GetTaskDetail(int taskId);
+
+        /// <summary>
+        /// get list task of campaign for manager
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Models.Data.Task>> GetListTaskManager(int campaignId, int ManagerId);
+
+        /// <summary>
+        /// get list task of campaign for member
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Models.Data.Task>> GetListTaskMember(int campaignId, int MemberId);
     }
 }

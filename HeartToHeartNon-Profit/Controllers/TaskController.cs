@@ -1,4 +1,5 @@
-﻿using HeartToHeartNon_Profit.Interfaces;
+﻿using AutoMapper;
+using HeartToHeartNon_Profit.Interfaces;
 using HeartToHeartNon_Profit.Models.Input;
 using HeartToHeartNon_Profit.Models.Output;
 using HeartToHeartNon_Profit.Repositories.Interfaces;
@@ -18,18 +19,22 @@ namespace HeartToHeartNon_Profit.Controllers
     public class TaskController : ControllerBase
     {
         private readonly ITaskRepository _repo;
+        private readonly ICampaignRepository _repoCam;
         private readonly ITokenService _tokenService;
         private const string FormatDate = "dd-MM-yyyy";
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// constructor
         /// </summary>
         /// <param name="repo"></param>
         /// <param name="tokenService"></param>
-        public TaskController(ITaskRepository repo, ITokenService tokenService)
+        public TaskController(ITaskRepository repo, ITokenService tokenService, ICampaignRepository repoCam, IMapper mapper)
         {
             _repo = repo;
             _tokenService = tokenService;
+            _repoCam = repoCam;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -53,7 +58,7 @@ namespace HeartToHeartNon_Profit.Controllers
         }
 
         /// <summary>
-        /// get campaign detail
+        /// get task detail
         /// </summary>
         /// <param name="taskId"></param>
         /// <returns></returns>
@@ -77,6 +82,48 @@ namespace HeartToHeartNon_Profit.Controllers
             };
 
             return Ok(result);
+        }
+
+        /// <summary>
+        /// get list all task
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet("get-list-all-task/{id}")]
+        public async Task<IActionResult> GetListAllTask(int campaignId)
+        {
+                var taskList = await _repoCam.GetListTask(campaignId);
+                var resultList = _mapper.Map<IEnumerable<ListTask>>(taskList);
+                return Ok(resultList);
+
+        }
+
+        /// <summary>
+        /// get list my task 
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet("get-my-list-task/{id}")]
+        public async Task<IActionResult> GetMyListTask(int campaignId)
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            string Role = User.FindFirst(ClaimTypes.Role).Value.ToString();
+
+            if(Role == "MANAGER" || Role == "ADMANAGER")
+            {
+                var taskList = await _repo.GetListTaskManager(campaignId,userId);
+                var resultList = _mapper.Map<IEnumerable<ListTask>>(taskList);
+                return Ok(resultList);
+            } 
+            else if (Role == "MEMBER" || Role == "ADMEMBER")
+            {
+                var taskList = await _repo.GetListTaskMember(campaignId,userId);
+                var resultList = _mapper.Map<IEnumerable<ListTask>>(taskList);
+                return Ok(resultList);
+            }
+
+            return NoContent();
+
         }
     }
 }

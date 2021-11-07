@@ -108,6 +108,25 @@ namespace HeartToHeartNon_Profit.Services
                 .ForMember(d => d.Phone, option => option
                 .MapFrom(src => src.Admin.Phone));
 
+            CreateMap<Models.Data.Task, ListTask>();
+
+            CreateMap<TaskDetail, ListTask>()
+                .ForMember(d => d.TaskId, option => option
+                .MapFrom(src => src.TaskId))
+                .ForMember(d => d.ManagerId, option => option
+                .MapFrom(src => src.Task.ManagerId))
+                .ForMember(d => d.Title, option => option
+                .MapFrom(src => src.Task.Title))
+                .ForMember(d => d.TaskType, option => option
+                .MapFrom(src => src.Task.TaskType))
+                .ForMember(d => d.Description, option => option
+                .MapFrom(src => src.Task.Description))
+                .ForMember(d => d.StartDate, option => option
+                .MapFrom(src => src.Task.StartDate.ToString("dd-MM-yyyy")))
+                .ForMember(c => c.EndDate, option => option
+                .MapFrom(src => src.Task.EndDate.ToString("dd-MM-yyyy")))
+                .ForMember(d => d.Status, option => option
+                .MapFrom(src => src.Task.Status));
         }
     }
 }
