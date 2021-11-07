@@ -162,6 +162,7 @@ namespace HeartToHeartNon_Profit.Repositories
         {
             var listMember = await _context.CampaignMembers
                  .Include(c => c.Campaign)
+                 .Include(d => d.Member)
                  .Where(u => u.CampaignId == campaignId)
                  .ToListAsync();
 
@@ -177,6 +178,7 @@ namespace HeartToHeartNon_Profit.Repositories
         {
             var listManager = await _context.CampaignManagers
                  .Include(c => c.Campaign)
+                 .Include(d => d.Manager)
                  .Where(u => u.CampaignId == campaignId)
                  .ToListAsync();
 

@@ -226,11 +226,6 @@ namespace HeartToHeartNon_Profit.Models.Data
 
                 entity.Property(e => e.EndDate).HasColumnType("datetime");
 
-                entity.Property(e => e.ItemType)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
 
                 entity.Property(e => e.TaskType)
@@ -276,6 +271,8 @@ namespace HeartToHeartNon_Profit.Models.Data
             modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.AvatarUrl).IsUnicode(false);
+
+                entity.Property(e => e.CredentialBackUrl).IsUnicode(false);
 
                 entity.Property(e => e.CredentialFrontUrl).IsUnicode(false);
 

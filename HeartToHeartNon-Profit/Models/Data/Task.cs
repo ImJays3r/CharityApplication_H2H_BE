@@ -16,7 +16,6 @@ namespace HeartToHeartNon_Profit.Models.Data
         public int ManagerId { get; set; }
         public string Title { get; set; }
         public string TaskType { get; set; }
-        public string ItemType { get; set; }
         public string Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
