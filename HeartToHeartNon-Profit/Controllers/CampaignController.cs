@@ -70,7 +70,7 @@ namespace HeartToHeartNon_Profit.Controllers
         /// <param name="campaignId"></param>
         /// <returns></returns>
 
-        [HttpGet("{id}")]
+        [HttpGet("campaign-detail/{id}")]
         public async Task<IActionResult> GetCampaignDetail(int id)
         {
             var campaign = await _repo.GetCampaignDetail(id);
@@ -107,7 +107,7 @@ namespace HeartToHeartNon_Profit.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
 
-        [HttpGet("campaign/{id}")]
+        [HttpGet("campaign-list-participant/{id}")]
         public async Task<IActionResult> GetCampaignListParticipant(int id)
         {
             var listMember = await _repo.GetListMember(id);

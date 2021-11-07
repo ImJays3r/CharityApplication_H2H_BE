@@ -102,7 +102,7 @@ namespace HeartToHeartNon_Profit.Controllers
         /// <param name="url"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPut("update-picture")]
+        [HttpPut("update-avatar")]
         public async Task<IActionResult> UpdateUserPicture(UpdateAvatarInput input)
         {
 

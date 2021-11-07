@@ -12,7 +12,7 @@ using HeartToHeartNon_Profit.Models.Output;
 
 namespace HeartToHeartNon_Profit.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "ADMIN")]
     [Route("api/[controller]")]
     [ApiController]
     public class CampaignManageController : ControllerBase

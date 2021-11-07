@@ -50,6 +50,8 @@ namespace HeartToHeartNon_Profit
             services.AddScoped<ICampaignManageRepository, CampaignManageRepository>();
             services.AddScoped<ICampaignRepository, CampaignRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITaskRepository, TaskRepository>();
+            services.AddScoped<IReportRepository, ReportRepository>();
 
             services.AddAutoMapper(typeof(CampaignRepository).Assembly);
 
