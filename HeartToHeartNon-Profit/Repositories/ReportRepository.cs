@@ -39,7 +39,7 @@ namespace HeartToHeartNon_Profit.Repositories
                Description =input.Description,
                ReportType = task.TaskType,
                Value = input.Value,
-               Status = true
+               Status = false
             };
 
             await _context.Reports.AddAsync(report);
