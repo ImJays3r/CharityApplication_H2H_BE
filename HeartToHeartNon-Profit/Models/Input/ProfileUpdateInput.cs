@@ -39,12 +39,6 @@ namespace HeartToHeartNon_Profit.Models.Input
         public string CredentialId { get; set; }
 
         /// <summary>
-        /// avatar
-        /// </summary>
-        [Required(ErrorMessage = "Can't be empty")]
-        public string AvatarUrl { get; set; }
-
-        /// <summary>
         /// gender
         /// </summary>
         [Required(ErrorMessage = "Can't be empty")]

@@ -20,7 +20,7 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        Task<bool> Register(Register user);
+        Task<int> Register(Register user);
         
         /// <summary>
         ///  check exist email 

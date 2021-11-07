@@ -68,7 +68,7 @@ namespace HeartToHeartNon_Profit.Repositories
         /// </summary>
         /// <param name="userIn"></param>
         /// <returns></returns>
-        public async Task<bool> Register(Register userIn)
+        public async Task<int> Register(Register userIn)
         {
             byte[] passwordHash, passwordSalt;
             _service.CreatePasswordHash(userIn.Password, out passwordHash, out passwordSalt);
@@ -87,7 +87,8 @@ namespace HeartToHeartNon_Profit.Repositories
                 Status = true
             };
             await _context.Users.AddAsync(user);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync(); 
+            return user.UserId;
         }
 
         /// <summary>

@@ -47,7 +47,6 @@ namespace HeartToHeartNon_Profit.Repositories
                     user.Phone = input.Phone;
                     user.DateOfBirth = DateTime.ParseExact(input.DateOfBirth, Format, CultureInfo.InvariantCulture);
                     user.CredentialId = input.CredentialId;
-                    user.AvatarUrl = input.AvatarUrl;
                     user.Gender = input.Gender;
                 }
                 if (await _context.SaveChangesAsync() > 0)

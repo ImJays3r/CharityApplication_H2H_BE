@@ -86,9 +86,14 @@ namespace HeartToHeartNon_Profit.Controllers
         {
             if (await _repo.UserExists(user.Email))
                 return BadRequest("Email already exists");
-            if (await _repo.Register(user))
+            int id = await _repo.Register(user);
+            RegisterOuput returnID = new()
             {
-                return Ok();
+                UserId = id
+            };
+            if (id>0)
+            {
+                return Ok(returnID);
             }
             else
             {
@@ -103,7 +108,7 @@ namespace HeartToHeartNon_Profit.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPut("update-avatar")]
-        public async Task<IActionResult> UpdateUserPicture(UpdateAvatarInput input)
+        public async Task<IActionResult> UpdateUserAvatar(UpdateAvatarInput input)
         {
 
             int check = await _repo.UpdateUserPicture(input);
