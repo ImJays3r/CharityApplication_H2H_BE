@@ -1,5 +1,6 @@
 ﻿using HeartToHeartNon_Profit.Interfaces;
 using HeartToHeartNon_Profit.Models.Input;
+using HeartToHeartNon_Profit.Models.Output;
 using HeartToHeartNon_Profit.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +19,7 @@ namespace HeartToHeartNon_Profit.Controllers
     {
         private readonly ITaskRepository _repo;
         private readonly ITokenService _tokenService;
+        private const string FormatDate = "dd-MM-yyyy";
 
         /// <summary>
         /// constructor
@@ -48,6 +50,33 @@ namespace HeartToHeartNon_Profit.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        /// <summary>
+        /// get campaign detail
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet("task-detail/{id}")]
+        public async Task<IActionResult> GetTaskDetail(int id)
+        {
+            var taskDetail = await _repo.GetTaskDetail(id);
+            TaskDetailOutput result = new()
+            {
+                TaskId = id,
+                Title = taskDetail.Title,
+                CampaignId = taskDetail.CampaignId,
+                Description = taskDetail.Description,
+                StartDate = taskDetail.StartDate.ToString(FormatDate),
+                EndDate = taskDetail.EndDate.ToString(FormatDate),
+                ManagerId = taskDetail.ManagerId,
+                Status = taskDetail.Status,
+                TaskType = taskDetail.TaskType
+                
+            };
+
+            return Ok(result);
         }
     }
 }

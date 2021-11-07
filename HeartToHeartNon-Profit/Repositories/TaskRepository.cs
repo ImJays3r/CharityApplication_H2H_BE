@@ -1,6 +1,7 @@
 ﻿using HeartToHeartNon_Profit.Models.Data;
 using HeartToHeartNon_Profit.Models.Input;
 using HeartToHeartNon_Profit.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -43,6 +44,17 @@ namespace HeartToHeartNon_Profit.Repositories
             };
             await _context.Tasks.AddAsync(task);
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        /// <summary>
+        /// Get Task Detail
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
+        public async Task<Models.Data.Task> GetTaskDetail(int taskId)
+        {
+            var taskDetail = await _context.Tasks.Where(a => a.TaskId == taskId).FirstOrDefaultAsync();
+            return taskDetail;
         }
     }
 }
