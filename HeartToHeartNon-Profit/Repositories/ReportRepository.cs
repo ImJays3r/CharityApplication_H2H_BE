@@ -48,6 +48,71 @@ namespace HeartToHeartNon_Profit.Repositories
         }
 
         /// <summary>
+        /// get first pic report
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
+        public async Task<string> GetFirstPicReport(int taskId)
+        {
+            var report = await _context.Reports.Where(a => a.TaskId == taskId).FirstOrDefaultAsync();
+            var photo = await _context.Media.Where(u => u.ReportId == report.ReportId).FirstOrDefaultAsync();
+            string url = photo.Url.ToString();
+            return url;
+        }
+
+        /// <summary>
+        /// get list report of manager
+        /// </summary>
+        /// <param name="campaignId"></param>
+        /// <param name="ManagerId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Models.Data.Task>> GetListReportManager(int campaignId, int ManagerId)
+        {
+            var TaskListManager = await _context.Tasks
+                 .Where(u => u.CampaignId == campaignId)
+                 .Where(a => a.ManagerId == ManagerId)
+                 .ToListAsync();
+            return TaskListManager;
+        }
+
+
+        /// <summary>
+        /// get list report member
+        /// </summary>
+        /// <param name="campaignId"></param>
+        /// <param name="MemberId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<TaskDetail>> GetListReportMember(int campaignId, int MemberId)
+        {
+            var TaskListMember = await _context.TaskDetails
+                .Include(u => u.Task)
+                .Where(c => c.Task.CampaignId == campaignId)
+                .Where(a => a.MemberId == MemberId)
+                .ToListAsync();
+
+            return TaskListMember;
+        }
+
+        /// <summary>
+        /// get total value of a single report
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
+        public async Task<decimal> GetTotalReportOfTask(int taskId)
+        {
+            var ListReport = await _context.Reports
+                .Where(t => t.TaskId == taskId)
+                .ToListAsync();
+            var listCount = ListReport.ToList();
+            decimal total = 0;
+            foreach(var value in listCount)
+            {
+                total = total + value.Value;
+            }
+            return total;
+        }
+
+        /// <summary>
         /// Update albumn of report to table media
         /// </summary>
         /// <param name="input"></param>

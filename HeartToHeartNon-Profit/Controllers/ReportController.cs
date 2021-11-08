@@ -19,6 +19,7 @@ namespace HeartToHeartNon_Profit.Controllers
     {
         private readonly IReportRepository _repo;
         private readonly ITokenService _tokenService;
+        private const string FormatDate = "dd-MM-yyyy";
 
         /// <summary>
         /// constructor
@@ -75,6 +76,74 @@ namespace HeartToHeartNon_Profit.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        /// <summary>
+        /// get list all report of manager
+        /// </summary>
+        /// <param name="campaignid"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "MANAGER,ADMANAGER")]
+        [HttpGet("campaign-list-report-manager")]
+        public async Task<IActionResult> GetListReportManager(int campaignid)
+        {
+            int managerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var ListReport = await _repo.GetListReportManager(campaignid, managerId);
+            var ListreportCount = ListReport.ToList();
+            List<ListReportCampaign> result = new List<ListReportCampaign> { };
+            foreach( var report in ListreportCount)
+            {
+                decimal total = await _repo.GetTotalReportOfTask(report.TaskId);
+                string url = await _repo.GetFirstPicReport(report.TaskId);
+                ListReportCampaign EachReport = new()
+                {
+                    TaskId = report.TaskId,
+                    Title = report.Title,
+                    TaskType = report.TaskType,
+                    PhotoUrl = url,
+                    TotalValue = total,
+                    StartDate = report.StartDate.ToString("dd-MM-yyyy"),
+                    EndDate = report.EndDate.ToString("dd-MM-yyyy"),
+                    Status = report.Status
+                };
+              result.Add(EachReport);  
+            }
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// get list all report of member
+        /// </summary>
+        /// <param name="campaignid"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "MEMBER,ADMEMBER")]
+        [HttpGet("campaign-list-report-member")]
+        public async Task<IActionResult> GetListReportMember(int campaignid)
+        {
+            int memberId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var ListReport = await _repo.GetListReportMember(campaignid, memberId);
+            var ListreportCount = ListReport.ToList();
+            List<ListReportCampaign> result = new List<ListReportCampaign> { };
+            foreach (var report in ListreportCount)
+            {
+                decimal total = await _repo.GetTotalReportOfTask(report.TaskId);
+                string url = await _repo.GetFirstPicReport(report.TaskId);
+                ListReportCampaign EachReport = new()
+                {
+                    TaskId = report.TaskId,
+                    Title = report.Task.Title,
+                    TaskType = report.Task.TaskType,
+                    PhotoUrl = url,
+                    TotalValue = total,
+                    StartDate = report.Task.StartDate.ToString("dd-MM-yyyy"),
+                    EndDate = report.Task.EndDate.ToString("dd-MM-yyyy"),
+                    Status = report.Task.Status
+                };
+                result.Add(EachReport);
+            }
+
+            return Ok(result);
         }
     }
 }

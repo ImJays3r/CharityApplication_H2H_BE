@@ -127,6 +127,7 @@ namespace HeartToHeartNon_Profit.Services
                 .MapFrom(src => src.Task.EndDate.ToString("dd-MM-yyyy")))
                 .ForMember(d => d.Status, option => option
                 .MapFrom(src => src.Task.Status));
+
         }
     }
 }

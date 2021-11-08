@@ -192,16 +192,17 @@ namespace HeartToHeartNon_Profit.Models.Data
 
             modelBuilder.Entity<TaskDetail>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.TaskDetailld)
+                    .HasName("PK_TaskDetails_1");
 
                 entity.HasOne(d => d.Member)
-                    .WithMany()
+                    .WithMany(p => p.TaskDetails)
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TaskDetails_Users");
 
                 entity.HasOne(d => d.Task)
-                    .WithMany()
+                    .WithMany(p => p.TaskDetails)
                     .HasForeignKey(d => d.TaskId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TaskDetails_Tasks");

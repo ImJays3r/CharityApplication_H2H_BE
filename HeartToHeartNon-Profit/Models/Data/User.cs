@@ -11,6 +11,7 @@ namespace HeartToHeartNon_Profit.Models.Data
         {
             Campaigns = new HashSet<Campaign>();
             Reports = new HashSet<Report>();
+            TaskDetails = new HashSet<TaskDetail>();
             Tasks = new HashSet<Task>();
         }
 
@@ -32,6 +33,7 @@ namespace HeartToHeartNon_Profit.Models.Data
 
         public virtual ICollection<Campaign> Campaigns { get; set; }
         public virtual ICollection<Report> Reports { get; set; }
+        public virtual ICollection<TaskDetail> TaskDetails { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }
     }
 }

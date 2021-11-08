@@ -26,7 +26,6 @@ namespace HeartToHeartNon_Profit.Models.Data
         public string Photourl { get; set; }
 
         public virtual User Admin { get; set; }
-       
         public virtual ICollection<Task> Tasks { get; set; }
     }
 }

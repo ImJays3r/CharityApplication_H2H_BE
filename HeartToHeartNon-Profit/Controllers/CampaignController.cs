@@ -113,7 +113,7 @@ namespace HeartToHeartNon_Profit.Controllers
             var listMember = await _repo.GetListMember(id);
             var listManager = await _repo.GetListManager(id);
             var resultAdminInfor = await _repo.GetAdminForList(id);
-
+         
             ListParticipant result = new()
             {
                 listMember = (ICollection<ListUserOutput>)_mapper.Map<IEnumerable<ListUserOutput>>(listMember),
