@@ -1,4 +1,5 @@
-﻿using HeartToHeartNon_Profit.Models.Input;
+﻿using HeartToHeartNon_Profit.Models.Data;
+using HeartToHeartNon_Profit.Models.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,13 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         /// get list task of campaign for member
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<Models.Data.Task>> GetListTaskMember(int campaignId, int MemberId);
+        Task<IEnumerable<TaskDetail>> GetListTaskMember(int campaignId, int MemberId);
+
+        /// <summary>
+        /// Add members to task
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        Task<bool> AddMemberToTask(AddMemberToTaskInput input);
     }
 }

@@ -24,12 +24,27 @@ namespace HeartToHeartNon_Profit.Repositories
             _context = context;
         }
 
+        public async Task<bool> AddMemberToTask(AddMemberToTaskInput input)
+        {
+            var listMember = input.MemberId.ToList();
+            foreach(var member in listMember)
+            {
+                TaskDetail addMember = new()
+                {
+                    TaskId = input.TaskId,
+                    MemberId = member
+                };
+                await _context.TaskDetails.AddAsync(addMember);
+            }
+            return await _context.SaveChangesAsync() > 0;
+        }
+
         /// <summary>
         /// Create New Task
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-            public async Task<bool> CreateTask(CreateTaskInput input, int managerid)
+        public async Task<bool> CreateTask(CreateTaskInput input, int managerid)
         {
             Models.Data.Task task = new()
             {

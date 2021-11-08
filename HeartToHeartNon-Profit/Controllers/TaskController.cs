@@ -38,13 +38,13 @@ namespace HeartToHeartNon_Profit.Controllers
         }
 
         /// <summary>
-        /// Register to a member role
+        /// Create New Task
         /// </summary>
         /// <param name="task"></param>
         /// <returns></returns>
         [Authorize(Roles = "MANAGER,ADMANAGER")]
         [HttpPost("create-task")]
-        public async Task<IActionResult> Register(CreateTaskInput input)
+        public async Task<IActionResult> CreateTask(CreateTaskInput input)
         {
             int managerid = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             if (await _repo.CreateTask(input,managerid))
@@ -124,6 +124,47 @@ namespace HeartToHeartNon_Profit.Controllers
 
             return NoContent();
 
+        }
+
+        /// <summary>
+        /// get campaign list member
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
+        [HttpGet("campaign-list-member/{id}")]
+        public async Task<IActionResult> GetCampaignListMember(int id)
+        {
+            var listMember = await _repoCam.GetListMember(id);
+            
+
+            ListParticipant result = new()
+            {
+                listMember = (ICollection<ListUserOutput>)_mapper.Map<IEnumerable<ListUserOutput>>(listMember)
+            };
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Add list member to task
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "MANAGER,ADMANAGER")]
+        [HttpPost("Add-member-to-task")]
+        public async Task<IActionResult> AddListMemberToTask(AddMemberToTaskInput input)
+        {
+            int managerid = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (await _repo.AddMemberToTask(input))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

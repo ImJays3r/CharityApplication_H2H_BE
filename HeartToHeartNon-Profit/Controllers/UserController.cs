@@ -36,7 +36,7 @@ namespace HeartToHeartNon_Profit.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("get-user-detail")]
         public async Task<IActionResult> GetUser()
         {
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
