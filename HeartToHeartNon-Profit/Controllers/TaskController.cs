@@ -89,7 +89,7 @@ namespace HeartToHeartNon_Profit.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        [HttpGet("get-list-all-task/{id}")]
+        [HttpGet("get-list-all-task")]
         public async Task<IActionResult> GetListAllTask(int campaignId)
         {
                 var taskList = await _repoCam.GetListTask(campaignId);
@@ -103,7 +103,7 @@ namespace HeartToHeartNon_Profit.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        [HttpGet("get-my-list-task/{id}")]
+        [HttpGet("get-my-list-task")]
         public async Task<IActionResult> GetMyListTask(int campaignId)
         {
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
