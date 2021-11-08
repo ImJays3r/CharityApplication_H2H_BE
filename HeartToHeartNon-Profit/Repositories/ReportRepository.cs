@@ -54,10 +54,30 @@ namespace HeartToHeartNon_Profit.Repositories
         /// <returns></returns>
         public async Task<string> GetFirstPicReport(int taskId)
         {
+            string url = "";
             var report = await _context.Reports.Where(a => a.TaskId == taskId).FirstOrDefaultAsync();
-            var photo = await _context.Media.Where(u => u.ReportId == report.ReportId).FirstOrDefaultAsync();
-            string url = photo.Url.ToString();
+            if (report != null)
+            {
+                var photo = await _context.Media.Where(u => u.ReportId == report.ReportId).FirstOrDefaultAsync();
+                if (photo != null)
+                {
+                    url = photo.Url.ToString();
+                }
+            }
             return url;
+        }
+
+        /// <summary>
+        /// get list all report
+        /// </summary>
+        /// <param name="campaignId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Models.Data.Task>> GetLisAllReport(int campaignId)
+        {
+            var TaskList = await _context.Tasks
+                .Where(u => u.CampaignId == campaignId)
+                .ToListAsync();
+            return TaskList;
         }
 
         /// <summary>

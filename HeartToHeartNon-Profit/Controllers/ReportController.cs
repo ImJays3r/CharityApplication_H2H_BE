@@ -83,6 +83,42 @@ namespace HeartToHeartNon_Profit.Controllers
         /// </summary>
         /// <param name="campaignid"></param>
         /// <returns></returns>
+        [Authorize]
+        [HttpGet("campaign-list-all-report")]
+        public async Task<IActionResult> GetAllListRepor(int campaignid)
+        { 
+            var ListReport = await _repo.GetLisAllReport(campaignid);
+            var ListreportCount = ListReport.ToList();
+            List<ListReportCampaign> result = new List<ListReportCampaign> { };
+            foreach (var report in ListreportCount)
+            {
+                decimal total = 0;
+                total = await _repo.GetTotalReportOfTask(report.TaskId);
+                
+                string url = await _repo.GetFirstPicReport(report.TaskId);
+                
+                ListReportCampaign EachReport = new()
+                {
+                    TaskId = report.TaskId,
+                    Title = report.Title,
+                    TaskType = report.TaskType,
+                    PhotoUrl = url,
+                    TotalValue = total,
+                    StartDate = report.StartDate.ToString("dd-MM-yyyy"),
+                    EndDate = report.EndDate.ToString("dd-MM-yyyy"),
+                    Status = report.Status
+                };
+                result.Add(EachReport);
+            }
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// get list all report of manager
+        /// </summary>
+        /// <param name="campaignid"></param>
+        /// <returns></returns>
         [Authorize(Roles = "MANAGER,ADMANAGER")]
         [HttpGet("campaign-list-report-manager")]
         public async Task<IActionResult> GetListReportManager(int campaignid)

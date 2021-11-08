@@ -24,6 +24,12 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         Task<bool> UpdateReportAlbum(UpdatePictureReportInput input);
 
         /// <summary>
+        /// get list all task
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Models.Data.Task>> GetLisAllReport(int campaignId);
+
+        /// <summary>
         /// get list report of campaign for manager
         /// </summary>
         /// <returns></returns>
