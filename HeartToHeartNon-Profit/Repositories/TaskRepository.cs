@@ -61,6 +61,15 @@ namespace HeartToHeartNon_Profit.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
+        public async Task<IEnumerable<TaskDetail>> GetListMemberInTask(int taskId)
+        {
+            var TaskListMember = await _context.TaskDetails
+                 .Include(u => u.Task)
+                 .Where(c => c.Task.TaskId == taskId)
+                 .ToListAsync();
+            return TaskListMember;
+        }
+
 
         /// <summary>
         /// get list task for manager
@@ -97,7 +106,7 @@ namespace HeartToHeartNon_Profit.Repositories
         /// </summary>
         /// <param name="taskId"></param>
         /// <returns></returns>
-        public async Task<Models.Data.Task> GetTaskDetail(int taskId)
+        public async Task<Models.Data.Task> GetTaskById(int taskId)
         {
             var taskDetail = await _context.Tasks.Where(a => a.TaskId == taskId).FirstOrDefaultAsync();
             return taskDetail;

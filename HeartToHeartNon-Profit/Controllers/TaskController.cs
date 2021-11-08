@@ -66,7 +66,7 @@ namespace HeartToHeartNon_Profit.Controllers
         [HttpGet("task-detail/{id}")]
         public async Task<IActionResult> GetTaskDetail(int id)
         {
-            var taskDetail = await _repo.GetTaskDetail(id);
+            var taskDetail = await _repo.GetTaskById(id);
             TaskDetailOutput result = new()
             {
                 TaskId = id,
@@ -132,16 +132,38 @@ namespace HeartToHeartNon_Profit.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
 
-        [HttpGet("campaign-list-member/{id}")]
-        public async Task<IActionResult> GetCampaignListMember(int id)
+        [HttpGet("campaign-list-member")]
+        public async Task<IActionResult> GetCampaignListMember(ListMemberNotInTaskInput input)
         {
-            var listMember = await _repoCam.GetListMember(id);
-            
-
-            ListParticipant result = new()
+            bool check;
+            var listMember = await _repoCam.GetListMember(input.CampaignId);
+            var ListMemberInTask = await _repo.GetListMemberInTask(input.TaskId);
+            List<ListUserOutput> result = new List<ListUserOutput> { };
+            foreach(var member in listMember.ToList())
             {
-                listMember = (ICollection<ListUserOutput>)_mapper.Map<IEnumerable<ListUserOutput>>(listMember)
-            };
+                check = false;
+                foreach(var memeberInTask in ListMemberInTask.ToList())
+                {
+                    if(member.MemberId == memeberInTask.MemberId)
+                    {
+                        check = true;
+                    }
+                }
+                if (!check)
+                {
+                    ListUserOutput eachMember = new()
+                    {
+                       UserId = member.MemberId,
+                       UserName = member.Member.UserName,
+                       RoleName = member.Member.RoleName,
+                       AvatarUrl = member.Member.AvatarUrl,
+                       Phone = member.Member.Phone
+                    };
+                    result.Add(eachMember);
+                }
+                
+            }
+            
 
             return Ok(result);
         }
