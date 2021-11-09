@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using HeartToHeartNon_Profit.Models.Input;
 
 namespace HeartToHeartNon_Profit.Repositories
 {
@@ -197,6 +198,48 @@ namespace HeartToHeartNon_Profit.Repositories
                 .Where(c => c.CampaignId == campaignId)
                 .FirstOrDefaultAsync();
             return adminDetail;
+        }
+
+        /// <summary>
+        /// add manager to campaign by admin
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public async Task<bool> AddManagerToCampaign(AddParticipantToCampaignInput input)
+        {
+            var listManager = input.listUser.ToList();
+            foreach(var manager in listManager)
+            {
+                CampaignManager managerAdded = new()
+                {
+                    CampaignId = input.campaignId,
+                    ManagerId = manager
+                };
+                await _context.CampaignManagers.AddAsync(managerAdded);
+            }
+
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        /// <summary>
+        /// add member to campaign by manager
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public async Task<bool> AddMemberToCampaign(AddParticipantToCampaignInput input)
+        {
+            var listMember = input.listUser.ToList();
+            foreach (var member in listMember)
+            {
+                CampaignMember memberAdded = new()
+                {
+                    CampaignId = input.campaignId,
+                    MemberId = member
+                };
+                await _context.CampaignMembers.AddAsync(memberAdded);
+            }
+
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

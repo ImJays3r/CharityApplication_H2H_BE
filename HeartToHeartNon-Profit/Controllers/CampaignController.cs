@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HeartToHeartNon_Profit.Models.Input;
 using HeartToHeartNon_Profit.Models.Output;
 using HeartToHeartNon_Profit.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -123,5 +124,37 @@ namespace HeartToHeartNon_Profit.Controllers
 
             return Ok(result);
         }
+
+        /// <summary>
+        /// Add user to Campaign
+        /// </summary>
+        /// <param name="CamIn"></param>
+        /// <returns></returns>
+
+        [HttpPost("add-user-to-campaign")]
+        public async Task<IActionResult> AddUserToCampaign(AddParticipantToCampaignInput input)
+        {
+            string role = User.FindFirst(ClaimTypes.Role).Value.ToString();
+          
+            if (role == "ADMIN")
+            {
+                if (await _repo.AddManagerToCampaign(input))
+                {
+                    return Ok();
+                }
+                
+            }
+            else if (role == "MANAGER" || role == "ADMANAGER")
+            {
+                if (await _repo.AddMemberToCampaign(input))
+                {
+                    return Ok();
+                }
+                
+            }
+            return NoContent();
+
+        }
+
     }
 }

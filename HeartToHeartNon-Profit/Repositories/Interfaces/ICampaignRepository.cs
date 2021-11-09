@@ -1,4 +1,5 @@
 ﻿using HeartToHeartNon_Profit.Models.Data;
+using HeartToHeartNon_Profit.Models.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,5 +78,17 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         /// <param name="TaskList"></param>
         /// <returns></returns>
         Task<int> GetTotalReport(IEnumerable<Models.Data.Task> TaskList);
+
+        /// <summary>
+        /// add manager to campaign by admin
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> AddManagerToCampaign(AddParticipantToCampaignInput input);
+
+        /// <summary>
+        /// add member to campaign by manager
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> AddMemberToCampaign(AddParticipantToCampaignInput input);
     }
 }

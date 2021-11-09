@@ -80,35 +80,34 @@ namespace HeartToHeartNon_Profit.Models.Data
 
             modelBuilder.Entity<CampaignManager>(entity =>
             {
-                entity.HasNoKey();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.HasOne(d => d.Campaign)
-                    .WithMany()
+                    .WithMany(p => p.CampaignManagers)
                     .HasForeignKey(d => d.CampaignId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CapaignManagers_Campaigns");
+                    .HasConstraintName("FK_CampaignManagers_Campaigns");
 
                 entity.HasOne(d => d.Manager)
-                    .WithMany()
+                    .WithMany(p => p.CampaignManagers)
                     .HasForeignKey(d => d.ManagerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CapaignManagers_Users");
+                    .HasConstraintName("FK_CampaignManagers_Users");
             });
 
             modelBuilder.Entity<CampaignMember>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("CampaignMember");
 
+                entity.Property(e => e.Id).HasColumnName("id");
+
                 entity.HasOne(d => d.Campaign)
-                    .WithMany()
+                    .WithMany(p => p.CampaignMembers)
                     .HasForeignKey(d => d.CampaignId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CampaignMember_Campaigns");
 
                 entity.HasOne(d => d.Member)
-                    .WithMany()
+                    .WithMany(p => p.CampaignMembers)
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CampaignMember_Users");
