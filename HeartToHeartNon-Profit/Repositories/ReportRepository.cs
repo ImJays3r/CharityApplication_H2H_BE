@@ -81,6 +81,34 @@ namespace HeartToHeartNon_Profit.Repositories
         }
 
         /// <summary>
+        /// get list all report of task
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Report>> GetLisAllReportOfTask(int taskId)
+        {
+            var listReport = await _context.Reports
+                .Where(u => u.TaskId == taskId)
+                .ToListAsync();
+            return listReport;
+        }
+
+        /// <summary>
+        /// get all report of task by member
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <param name="memberid"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Report>> GetLisAllReportOfTaskByMember(int taskId, int memberid)
+        {
+            var listReport = await _context.Reports
+                .Where(u => u.TaskId == taskId)
+                .Where(t => t.MemberId == memberid)
+                .ToListAsync();
+            return listReport;
+        }
+
+        /// <summary>
         /// get list report of manager
         /// </summary>
         /// <param name="campaignId"></param>
@@ -88,11 +116,11 @@ namespace HeartToHeartNon_Profit.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Models.Data.Task>> GetListReportManager(int campaignId, int ManagerId)
         {
-            var TaskListManager = await _context.Tasks
+            var ReportListManager = await _context.Tasks
                  .Where(u => u.CampaignId == campaignId)
                  .Where(a => a.ManagerId == ManagerId)
                  .ToListAsync();
-            return TaskListManager;
+            return ReportListManager;
         }
 
 
@@ -104,13 +132,13 @@ namespace HeartToHeartNon_Profit.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<TaskDetail>> GetListReportMember(int campaignId, int MemberId)
         {
-            var TaskListMember = await _context.TaskDetails
+            var ReportListMember = await _context.TaskDetails
                 .Include(u => u.Task)
                 .Where(c => c.Task.CampaignId == campaignId)
                 .Where(a => a.MemberId == MemberId)
                 .ToListAsync();
 
-            return TaskListMember;
+            return ReportListMember;
         }
 
         /// <summary>

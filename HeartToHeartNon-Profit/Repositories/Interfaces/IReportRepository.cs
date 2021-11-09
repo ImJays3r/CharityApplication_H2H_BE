@@ -24,7 +24,7 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         Task<bool> UpdateReportAlbum(UpdatePictureReportInput input);
 
         /// <summary>
-        /// get list all task
+        /// get list all report of campaign
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<Models.Data.Task>> GetLisAllReport(int campaignId);
@@ -52,5 +52,17 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<string> GetFirstPicReport(int taskId);
+
+        /// <summary>
+        /// get list all report of task
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Report>> GetLisAllReportOfTask(int taskId);
+
+        /// <summary>
+        /// get list all report of task by member
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Report>> GetLisAllReportOfTaskByMember(int taskId, int memberid);
     }
 }

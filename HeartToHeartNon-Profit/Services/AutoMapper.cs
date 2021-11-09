@@ -108,8 +108,6 @@ namespace HeartToHeartNon_Profit.Services
                 .ForMember(d => d.Phone, option => option
                 .MapFrom(src => src.Admin.Phone));
 
-            CreateMap<Models.Data.Task, ListTask>();
-
             CreateMap<TaskDetail, ListTask>()
                 .ForMember(d => d.TaskId, option => option
                 .MapFrom(src => src.TaskId))
@@ -127,6 +125,9 @@ namespace HeartToHeartNon_Profit.Services
                 .MapFrom(src => src.Task.EndDate.ToString("dd-MM-yyyy")))
                 .ForMember(d => d.Status, option => option
                 .MapFrom(src => src.Task.Status));
+
+            CreateMap<Models.Data.Task, ListTask>();
+            CreateMap<Report, ListReportTask>();
 
         }
     }
