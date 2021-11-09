@@ -212,5 +212,32 @@ namespace HeartToHeartNon_Profit.Controllers
 
                 return NoContent();
         }
+
+        /// <summary>
+        /// get report detail
+        /// </summary>
+        /// <param name="reportid"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet("get-report-detail")]
+        public async Task<IActionResult> GetReportDetail(int reportid)
+        {
+            var Album = await _repo.GetListAllPhoto(reportid);
+            var report = await _repo.GetReportById(reportid);
+
+            ReportDetailOutput result = new()
+            {
+                ReportId = reportid,
+                Description = report.Description,
+                MemberId = report.MemberId,
+                photoUrl = (ICollection<string>)Album,
+                ReportType = report.ReportType,
+                TaskId = report.TaskId,
+                Value = report.Value,
+                Status = report.Status
+            };
+
+            return Ok(result);
+        }
     }
 }

@@ -64,5 +64,17 @@ namespace HeartToHeartNon_Profit.Repositories.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<Report>> GetLisAllReportOfTaskByMember(int taskId, int memberid);
+
+        /// <summary>
+        /// get list all photo of report
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<string>> GetListAllPhoto(int reportId);
+
+        /// <summary>
+        /// get report by id
+        /// </summary>
+        /// <returns></returns>
+        Task<Report> GetReportById(int reportId);
     }
 }

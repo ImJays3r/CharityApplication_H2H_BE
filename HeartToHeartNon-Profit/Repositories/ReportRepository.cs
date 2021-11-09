@@ -68,6 +68,25 @@ namespace HeartToHeartNon_Profit.Repositories
         }
 
         /// <summary>
+        /// get all photo of report
+        /// </summary>
+        /// <param name="reportId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<string>> GetListAllPhoto(int reportId)
+        {
+            List<string> album = new List<string> { };
+            var ListPhoto = await _context.Media
+                .Where(u => u.ReportId == reportId)
+                .ToListAsync();
+            foreach(var photo in ListPhoto.ToList())
+            {
+                album.Add(photo.Url);
+            }
+
+            return album;
+        }
+
+        /// <summary>
         /// get list all report
         /// </summary>
         /// <param name="campaignId"></param>
@@ -179,6 +198,20 @@ namespace HeartToHeartNon_Profit.Repositories
             }
             
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        /// <summary>
+        /// get report by id
+        /// </summary>
+        /// <param name="reportId"></param>
+        /// <returns></returns>
+        public async Task<Report> GetReportById(int reportId)
+        {
+            var report = await _context.Reports
+                 .Where(u => u.ReportId == reportId)
+                 .FirstOrDefaultAsync();
+
+            return report;
         }
     }
 }
