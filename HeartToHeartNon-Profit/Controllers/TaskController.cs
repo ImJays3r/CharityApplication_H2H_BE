@@ -131,7 +131,7 @@ namespace HeartToHeartNon_Profit.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
+        [Authorize]
         [HttpGet("campaign-list-member")]
         public async Task<IActionResult> GetCampaignListMember(ListMemberNotInTaskInput input)
         {
@@ -165,6 +165,20 @@ namespace HeartToHeartNon_Profit.Controllers
             }
             
 
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// get task list member
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet("task-list-member")]
+        public async Task<IActionResult> GetTaskListMember(int taskId)
+        {
+            var ListMemberInTask = await _repo.GetListMemberInTask(taskId);
+            var result = _mapper.Map<IEnumerable<ListUserOutput>>(ListMemberInTask);
             return Ok(result);
         }
 

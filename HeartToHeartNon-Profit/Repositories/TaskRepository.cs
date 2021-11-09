@@ -65,6 +65,7 @@ namespace HeartToHeartNon_Profit.Repositories
         {
             var TaskListMember = await _context.TaskDetails
                  .Include(u => u.Task)
+                 .Include(t => t.Member)
                  .Where(c => c.Task.TaskId == taskId)
                  .ToListAsync();
             return TaskListMember;

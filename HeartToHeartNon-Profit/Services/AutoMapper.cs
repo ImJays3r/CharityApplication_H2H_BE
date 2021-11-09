@@ -129,6 +129,18 @@ namespace HeartToHeartNon_Profit.Services
             CreateMap<Models.Data.Task, ListTask>();
             CreateMap<Report, ListReportTask>();
 
+            CreateMap<TaskDetail, ListUserOutput>()
+               .ForMember(d => d.UserId, option => option
+                .MapFrom(src => src.MemberId))
+                .ForMember(d => d.UserName, option => option
+                .MapFrom(src => src.Member.UserName))
+                .ForMember(d => d.RoleName, option => option
+                .MapFrom(src => src.Member.RoleName))
+                .ForMember(d => d.AvatarUrl, option => option
+                .MapFrom(src => src.Member.AvatarUrl))
+                .ForMember(d => d.Phone, option => option
+                .MapFrom(src => src.Member.Phone));
+
         }
     }
 }
